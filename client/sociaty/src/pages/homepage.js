@@ -12,7 +12,7 @@ function Home() {
         </div>
         <LinkContainer to="/chat">
         <Button variant="primary" size="lg">
-          Large button
+          Lets chat
         </Button>
         </LinkContainer>
         
