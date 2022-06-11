@@ -2,7 +2,10 @@ import React from 'react'
 
 function sidebar() {
   return (
-    <div>sidebar</div>
+    <div>
+        <h1>Friends</h1>
+        
+    </div>
   )
 }
 
