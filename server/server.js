@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 const server = require('http').createServer(app);
-const PORT = 3000;
+const PORT = 5000;
 const io = require('socket.io')(server, {
     cors: {
       origin: "http://localhost:3001",
@@ -21,9 +21,9 @@ const io = require('socket.io')(server, {
 
 
 
-app.get('/', (reg, res) => {
-    res.send('Messaging App')
-})
+// app.get('/', (reg, res) => {
+//     res.send('Messaging App')
+// })
 
 
 server.listen(PORT, ()=> {
