@@ -25,7 +25,14 @@ function Signup(value, setValue) {
 
     const handleSignup = async (e) => {
         e.preventDefault();
-        if (handleValidation()) {
+        if (handleValidate()) {
+          const { email, username, password } = values;
+          const { data } = await axios.post(signupRoute, {
+            username,
+            email,
+            password,
+          });
+    
           
         }
 
