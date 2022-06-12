@@ -10,7 +10,6 @@ router.post('/', async(req, res)=> {
     } catch (e) {
         res.status(400).json({
           message: "An error occurred",
-          error: error.message,
         })
     }
         
@@ -30,3 +29,5 @@ router.post('/login', async(req, res)=> {
       }
         
 }) 
+
+module.exports = router;
