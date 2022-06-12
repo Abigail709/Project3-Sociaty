@@ -4,7 +4,7 @@ const cors = require('cors');
 const userRoutes = require('./routes/User')
 const mongoose = require('mongoose')
 const db = require('./config/connection');
-
+const userRoutes = require("./routes/UserRroute")
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -14,7 +14,7 @@ app.use('/users', userRoutes)
 require('./config/connection')
 require("dotenv").config();
 
-
+app.use("/api/auth",userRoutes)
 
 
 
