@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const userRoutes = require('./routes/User')
+// const userRoutes = require('./routes/User')
 const mongoose = require('mongoose')
 const db = require('./config/connection');
 const userRoutes = require("./routes/UserRroute")
@@ -10,19 +10,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-app.use('/users', userRoutes)
+// app.use('/users', userRoutes)
 require('./config/connection')
 require("dotenv").config();
 
 app.use("/api/auth",userRoutes)
 
 
-
 const server = require('http').createServer(app);
+
 const PORT = 5000;
 const io = require('socket.io')(server, {
     cors: {
-      origin: "http://localhost:3001",
+      origin: "http://localhost:5000",
       methods: ["GET", "POST"],
     },
 });
@@ -47,3 +47,5 @@ db.once('open', () => {
       console.log(`Now listening on port: ${PORT}!`);
     });
   });
+
+

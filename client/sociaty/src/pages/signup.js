@@ -4,9 +4,9 @@ import Container from 'react-bootstrap/esm/Container';
 import Form from 'react-bootstrap/Form';
 import {Link} from 'react-router-dom';
 import axios from "axios";
+import {signupRoute} from "../utils/apiRoutes"
 
-
-function Signup(value, setValue) {
+function Signup() {
     // const [username, setName] = useState('');
     // const [email, setEmail] = useState('');
     // const [password, setPassword] = useState('');
@@ -23,28 +23,30 @@ function Signup(value, setValue) {
 
     
 
-    const handleSignup = async (e) => {
-        e.preventDefault();
-        if (handleValidate()) {
-          const { email, username, password } = values;
-          const { data } = await axios.post(signupRoute, {
-            username,
-            email,
-            password,
-          });
     
-          
-        }
-
-          
-    }
     // const handleChange = (event) => {
     //   ({  [event.target.name]: event.target.value });
 
         
     // }
 
-    
+    const handleSignup = async (event) => {
+      event.preventDefault();
+      if (handleValidate()) {
+        
+        console.log("in validate", signupRoute)
+        const { email, username, password, confirmPassword } = values;
+        const { data } = await axios.post(signupRoute, {
+          username,
+          email,
+          password,
+        });
+  
+        
+      }
+
+        
+    }
     
 
     const handleChange = (event) => {
@@ -54,14 +56,23 @@ function Signup(value, setValue) {
     const handleValidate =() => {
       const {username, email, password, confirmPassword} = values;
       if (password !== confirmPassword) {
+        
+        
        alert('Enter matching password')
-      }
+       
+      } 
+      return true;
     };
+
+
+    
+
+
 
     return (
                 <Container>
-                <Form onSubmit={handleSignup}>
-                <Form.Group className="mb-3" controlId="formBasicEmail" >
+                <Form action="" onSubmit={(event) => handleSignup(event)}>
+                <Form.Group className="mb-3" controlId="fuserName" >
                   <Form.Label>UseName</Form.Label>
                   <Form.Control type="name" placeholder="Enter Username" name="username" onChange={(e) => handleChange(e)} />
                   
@@ -76,7 +87,7 @@ function Signup(value, setValue) {
                   </Form.Text>
                 </Form.Group>
           
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3" controlId="formBasicPassword1">
                   <Form.Label>Password</Form.Label>
                   <Form.Control type="password" placeholder="Password" name="password" onChange={(e) => handleChange(e)} />
                 </Form.Group>

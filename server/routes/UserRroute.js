@@ -1,10 +1,11 @@
+const { signup } = require("../controller/usercontrol");
 
 
- const router = require("express").Router();
+const router = require("express").Router();
 
- const {signup} = require("../controller/usercontrol")
- router.post('/signup', signup); 
+router.post("/signup", signup);
 
+module.exports = router;
 
 // const User = require("../models/userinfo");
 // const router = require("express").Router();
@@ -38,4 +39,3 @@
         
 // }) 
 
-module.exports = router;

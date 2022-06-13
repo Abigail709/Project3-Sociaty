@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    min: 9,
+    min: 3,
   },
   status: {
     type: String,
