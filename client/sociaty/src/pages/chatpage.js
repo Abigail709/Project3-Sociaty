@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ReactDOM from "react-dom";
 import {Container} from '../components/styles/chat.styled'
 import io from 'socket.io-client'
+import Chatting from '../components/chatting';
 
 const socket = io.connect('http://localhost:5000')
 
@@ -25,7 +26,7 @@ function Chat() {
 
   const joinRoom = () => {
     if (username !== '' && room !== '') {
-      
+      socket.emit("join_room", room)
     }
   }
 
@@ -55,8 +56,9 @@ function Chat() {
             <h2>Message</h2>
             <input type="text" placeholder='Hen' onChange={(event) => {setUsername(event.target.value);}}/>
             <input type="text" placeholder='Room ID' onChange={(event) => {setRoom(event.target.value);}}/>
-            <button>Join A Room</button>
+            <button onClick={joinRoom}>Join A Room</button>
 
+            <Chatting socket={socket} username={username} room={room}/>
          </div>
       </Container>
     );
