@@ -6,6 +6,9 @@ const mongoose = require('mongoose')
 const db = require('./config/connection');
 const userRoutes = require("./routes/UserRroute")
 
+const http = require("http");
+const {Server} = require("socket.io");
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
@@ -17,15 +20,25 @@ require("dotenv").config();
 app.use("/api/auth",userRoutes)
 
 
-const server = require('http').createServer(app);
+const server = http.createServer(app);
 
 const PORT = 5000;
-const io = require('socket.io')(server, {
+const io = new Server(server, {
     cors: {
-      origin: "http://localhost:5000",
+      origin: "http://localhost:3000",
       methods: ["GET", "POST"],
     },
 });
+
+
+
+io.on("connection", (socket) => {
+  console.log(` User Connected: ${socket.id}`);
+
+  socket.on("disconnect", () => {
+    console.log("Disconnected", socket.id)
+  })
+})
 
 
 
@@ -38,14 +51,14 @@ const io = require('socket.io')(server, {
 
 
 
-// server.listen(PORT, ()=> {
-//     console.log(`Now listening on port: ${PORT}`)
-// });
+server.listen(5000, ()=> {
+    console.log(`Now listening on port: ${PORT}`)
+});
 
-db.once('open', () => {
-    app.listen(PORT, () => {
-      console.log(`Now listening on port: ${PORT}!`);
-    });
-  });
+// db.once('open', () => {
+//     app.listen(PORT, () => {
+//       console.log(`Now listening on port: ${PORT}!`);
+//     });
+//   });
 
 
