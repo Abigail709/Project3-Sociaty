@@ -31,10 +31,10 @@ module.exports.signup = async (req, res, next) => {
     next(ex);
   }
     
-  }
+};
 
 
-  module.exports.login = async (req, res, next) => {
+module.exports.login = async (req, res, next) => {
     try {
       const { username, password } = req.body;
       
@@ -55,4 +55,20 @@ module.exports.signup = async (req, res, next) => {
     } catch (ex) {
       next(ex);
     }
-  };
+};
+
+
+
+module.exports.getAllUsers = async (req, res, next) => {
+try {
+  const users = await User.find({ _id: { $ne: req.params.id } }).select([
+    "_id",
+    "email",
+    "username",
+    
+  ]);
+  return res.json(users);
+} catch (ex) {
+  next(ex);
+}
+};

@@ -1,12 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-function sidebar() {
+export const sidebar = (props) => {
   return (
-    <div>
-        <h1>Friends</h1>
-        
-    </div>
+    <div>sidebar</div>
   )
 }
 
-export default sidebar
+const mapStateToProps = (state) => ({})
+
+const mapDispatchToProps = {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(sidebar)
