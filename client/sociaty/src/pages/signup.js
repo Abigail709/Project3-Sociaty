@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/esm/Container';
 import Form from 'react-bootstrap/Form';
-import {Link} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import axios from "axios";
 import {signupRoute} from "../utils/apiRoutes"
 
@@ -10,6 +10,7 @@ function Signup() {
     // const [username, setName] = useState('');
     // const [email, setEmail] = useState('');
     // const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const [values, setValues] = useState({
     username: "",
@@ -41,7 +42,17 @@ function Signup() {
           email,
           password,
         });
-  
+
+
+        if (data.status === false) {
+          alert("data.msg")
+        }
+        if (data.status === true) {
+          localStorage.setItem(
+            "Chat-App-user", JSON.stringify(data.user)
+          );
+           navigate("/");
+        }
         
       }
 
@@ -100,7 +111,9 @@ function Signup() {
                   <Form.Check type="checkbox" label="Check me out" />
                 </Form.Group> */}
                 <Button variant="primary" type="submit">
-                  Signup
+                <Link to="/login">Sigin</Link>
+              
+                  
                 </Button>
               </Form>
               <div className='signuplink'>

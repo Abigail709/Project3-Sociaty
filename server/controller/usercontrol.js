@@ -1,31 +1,34 @@
-module.exports.signup =(req, res, next) => {
-  console.log(req.body)
-};
+
+const bcrypt = require("bcrypt");
+const User = require("../models/userinfo");
+
+module.exports.signup = async (req, res, next) => {
+  try {
+    const { username, email, password } = req.body;
+    
+    const usernameScan = await User.findOne({ username });
 
 
+    if (usernameScan)
+      return res.json({ msg: "Username already used", status: false });
+    const emailScan = await User.findOne({ email });
+
+    if (emailScan)
+      return res.json({ msg: "Email already used", status: false });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      email,
+      username,
+      password: hashedPassword,
+    });
 
 
-// const bcrypt = require("bcrypt");
-// const User = require("../models/userinfo");
+    delete user.password;
+    return res.json({ status: true, user });
 
-// exports.login = async (req, res, next) => {
-//     try {
-//       const user = await User.findOne({ username, password })
-//       if (!user) {
-//         res.status(401).json({
-//           message: "Login not successful",
-//           error: "User not found",
-//         })
-//       } else {
-//         res.status(200).json({
-//           message: "Login successful",
-//           user,
-//         })
-//       }
-//     } catch (error) {
-//       res.status(400).json({
-//         message: "An error occurred",
-//         error: error.message,
-//       })
-//     }
-//   }
+
+  } catch (ex) {
+    next(ex);
+  }
+    
+  }

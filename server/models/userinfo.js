@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 // const {isEmail} = require('validator');
 const bcrypt =require('bcrypt');
-const { default: isEmail } = require("validator/lib/isEmail");
 
 const userSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true,
     unique: true,
@@ -16,47 +15,38 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    max: 50,
-    validate: [isEmail, "Enter new email"]
+    max: 20,
+    
   },
   password: {
     type: String,
     required: true,
-    min: 3,
+    min: 8,
+   
   },
-  status: {
-    type: String,
-    default: 'online'
-  },
-  newMessage: {
-    type: Object,
-    default: {}
-  },
-  minimize: false}
-
-
-);
-
-
-userSchema.pre('save', function(next){
-    const user = this;
-    if(!user.isModified('password')) return next();
   
-    bcrypt.genSalt(10, function(err, salt){
-      if(err) return next(err);
+
+});
+
+
+// userSchema.pre('save', function(next){
+//     const user = this;
+//     if(!user.isModified('password')) return next();
   
-      bcrypt.hash(user.password, salt, function(err, hash){
-        if(err) return next(err);
+//     bcrypt.genSalt(10, function(err, salt){
+//       if(err) return next(err);
   
-        user.password = hash
-        next();
-      })
+//       bcrypt.hash(user.password, salt, function(err, hash){
+//         if(err) return next(err);
   
-    })
+//         user.password = hash
+//         next();
+//       })
   
-  })
+//     })
+  
+//   })
 
 
 
-const User = mongoose.model("user", userSchema);
-module.exports = User
+  module.exports = mongoose.model("User", userSchema);
