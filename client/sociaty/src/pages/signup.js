@@ -7,9 +7,7 @@ import axios from "axios";
 import {signupRoute} from "../utils/apiRoutes"
 
 function Signup() {
-    // const [username, setName] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
+    
     const navigate = useNavigate();
 
     const [values, setValues] = useState({
@@ -19,17 +17,11 @@ function Signup() {
     confirmPassword: "",
     });
 
+
     const [submitted, setSubmitted] = useState(false);
 
 
     
-
-    
-    // const handleChange = (event) => {
-    //   ({  [event.target.name]: event.target.value });
-
-        
-    // }
 
     const handleSignup = async (event) => {
       event.preventDefault();
@@ -107,9 +99,7 @@ function Signup() {
                   <Form.Label>Confirm Password</Form.Label>
                   <Form.Control type="password" placeholder="Confrim Password" name="confirmPassword" onChange={(e) => handleChange(e)} />
                 </Form.Group>
-                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group> */}
+                
                 <Button variant="primary" type="submit">
                 <Link to="/login">Sigin</Link>
               

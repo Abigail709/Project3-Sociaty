@@ -19,14 +19,19 @@ const socket = io.connect('http://localhost:5000')
 function Chat() {
   const navigate = useNavigate();
 
-  const [friends, setFriends] = useState([]);
-  const [currentUser, setCurrentUser] = useState(undefined);
   const [username, setUsername] = useState('');
+  const [friends, setFriends] = useState([]);
   const [room, setRoom] = useState('');
+  const [currentUser, setCurrentUser] = useState(undefined);
+  const [showChat, setShowChat] = useState(false);
+  
+
+
 
   const joinRoom = () => {
     if (username !== '' && room !== '') {
-      socket.emit("join_room", room)
+      socket.emit("join_room", room);
+      setShowChat(true);
     }
   }
 
@@ -45,46 +50,36 @@ function Chat() {
   
   
   
-  
-
   return (
+    
       <Container >
-         <div className='chatcontainer'> 
-           {/* <Friends friends={friends} currentUser={currentUser} />
-            */}
+      
+         <div className='joinchat'> 
+         {!showChat ? (
+           <div className='joinChat'>
 
-            <h2>Message</h2>
-            <input type="text" placeholder='Hen' onChange={(event) => {setUsername(event.target.value);}}/>
+            <h2> Message </h2>
+            <input type="text" placeholder='James' onChange={(event) => {setUsername(event.target.value);}}/>
             <input type="text" placeholder='Room ID' onChange={(event) => {setRoom(event.target.value);}}/>
-            <button onClick={joinRoom}>Join A Room</button>
-
+            <button onClick={joinRoom}>Join Room</button>
+            </div>
+          )
+          :
+          (
+            
             <Chatting socket={socket} username={username} room={room}/>
+          )}
+
          </div>
       </Container>
+      
     );
   }
 
 
   
 
-//  const Container = styled.div`
-// height: 1200px;
-// width: 100%;
-// background-color:pink;
-// display: flex;
-// flex-direction: column;
-// justify-content: center;
-// .chatcontainer {
-//   height:900px;
-//   width: 80%;
-//   background-color:white;
-//   display:grid
-//   grid-template-columns: 25% 75%;
-//   @media screen and (min-width: 720px) and (max-width: 1080px) {
-//     grid-template-columns: 35% 65%;
-// }
-// }
-// `;
+
 
 
   export default Chat;

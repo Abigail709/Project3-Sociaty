@@ -2,6 +2,8 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/userinfo");
 
+
+
 module.exports.signup = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
@@ -10,11 +12,11 @@ module.exports.signup = async (req, res, next) => {
 
 
     if (usernameScan)
-      return res.json({ msg: "Username already used", status: false });
+      return res.json({ msg: "Username already in use", status: false });
     const emailScan = await User.findOne({ email });
 
     if (emailScan)
-      return res.json({ msg: "Email already used", status: false });
+      return res.json({ msg: "Email already in use", status: false });
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
       email,
@@ -37,16 +39,15 @@ module.exports.signup = async (req, res, next) => {
 module.exports.login = async (req, res, next) => {
     try {
       const { username, password } = req.body;
-      
       const usernameScan = await User.findOne({ username });
   
   
       if (!user)
         return res.json({ msg: "Incorrect Username or Password", status: false });
-
         const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid)
 
+
+      if (!isPasswordValid)
         return res.json({ msg: "Incorrect Username or Password", status: false });
       
         delete user.password;
@@ -55,20 +56,4 @@ module.exports.login = async (req, res, next) => {
     } catch (ex) {
       next(ex);
     }
-};
-
-
-
-module.exports.getAllUsers = async (req, res, next) => {
-try {
-  const users = await User.find({ _id: { $ne: req.params.id } }).select([
-    "_id",
-    "email",
-    "username",
-    
-  ]);
-  return res.json(users);
-} catch (ex) {
-  next(ex);
-}
 };

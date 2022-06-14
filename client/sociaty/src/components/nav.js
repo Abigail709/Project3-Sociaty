@@ -9,10 +9,10 @@ import {LinkContainer} from 'react-router-bootstrap';
 function Navigation() {
     return (
         <>
-          <Nav className="justify-content-center" activeKey="/home">
+          <Nav className="header" activeKey="/home" >
             <Nav.Item>
             <LinkContainer to="/">
-                    <Nav.Link>Home</Nav.Link>
+                    <Nav.Link className='header'>Home</Nav.Link>
                   </LinkContainer>
             </Nav.Item>
             <Nav.Item>
